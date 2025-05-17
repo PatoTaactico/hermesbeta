@@ -98,7 +98,8 @@
           $_GET["ruta"] == "devoluciones" ||
           $_GET["ruta"] == "salidas" ||
           $_GET["ruta"] == "reportes" ||
-          $_GET["ruta"] == "salir") {
+          $_GET["ruta"] == "salir" ||
+          $_GET["ruta"] == "Mantenimiento") {
 
             include "modulos/".$_GET["ruta"].".php";
       } else {

@@ -192,7 +192,16 @@
                 Reportes
               </p>
             </a>
-          </li>          
+          </li>
+          
+          <li class="nav-item">
+            <a href="Mantenimiento" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+                Mantenimiento
+              </p>
+            </a>
+          </li>
 
 
         </ul>
