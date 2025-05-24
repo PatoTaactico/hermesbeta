@@ -50,6 +50,19 @@ ENVIAR EQUIPO A MANTENIMIENTO CON MOTIVO
         
         echo json_encode($respuestaControlador);
     }
+
+        /*=============================================
+    MARCAR EQUIPO COMO DISPONIBLE
+    =============================================*/
+    public function ajaxMarcarDisponible() {
+        $respuestaControlador = ControladorDevoluciones::ctrMarcarDisponible(
+            $this->idPrestamo,
+            $this->idEquipo
+        );
+        
+        echo json_encode($respuestaControlador);
+    }
+
 }
 
 // Obtener datos del préstamo
@@ -73,4 +86,12 @@ if(isset($_POST["accion"]) && $_POST["accion"] === "enviarMantenimiento") {
     $devolucion->idPrestamo = $_POST["idPrestamo"];
     $devolucion->idEquipo = $_POST["idEquipo"];
     $devolucion->ajaxEnviarMantenimiento();
+}
+
+// Marcar equipo como disponible
+if(isset($_POST["accion"]) && $_POST["accion"] === "marcarDisponible") {
+    $devolucion = new AjaxDevoluciones();
+    $devolucion->idPrestamo = $_POST["idPrestamo"];
+    $devolucion->idEquipo = $_POST["idEquipo"];
+    $devolucion->ajaxMarcarDisponible();
 }
