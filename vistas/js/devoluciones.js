@@ -370,3 +370,68 @@ $('#btnGuardarMalEstado').click(function() {
         }
     });
 });
+
+// Modificar el manejador existente para el botón de buen estado
+$(document).on('click', '.equipo-buttons-container .btn-devolver-equipo[data-estado="buen_estado"]', function() {
+    var prestamoId = $(this).attr('data-prestamo-id');
+    var equipoId = $(this).attr('data-equipo-id');
+    
+    Swal.fire({
+        title: '¿Confirmar devolución en buen estado?',
+        text: "El equipo será marcado como disponible para nuevos préstamos",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Sí, marcar como disponible',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "ajax/devoluciones.ajax.php",
+                method: "POST",
+                data: {
+                    accion: "marcarDisponible",
+                    idPrestamo: prestamoId,
+                    idEquipo: equipoId
+                },
+                dataType: "json",
+                success: function(respuesta) {
+                    if (respuesta.success) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "¡Equipo disponible!",
+                            text: respuesta.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            // Eliminar el contenedor del equipo de la modal
+                            $(`.btn-devolver-equipo[data-equipo-id='${equipoId}'][data-prestamo-id='${prestamoId}']`)
+                                .closest('.card.card-outline.card-secondary').remove();
+                            
+                            // Verificar si no quedan más equipos y cerrar modal
+                            if ($('#equiposListContainer .card').length === 0) {
+                                $('#modalVerDetallesPrestamo').modal('hide');
+                                // Opcional: recargar la tabla principal
+                                window.location.reload();
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: respuesta.message
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error de conexión",
+                        text: "No se pudo completar la operación"
+                    });
+                }
+            });
+        }
+    });
+});
