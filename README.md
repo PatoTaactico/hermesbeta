@@ -60,6 +60,26 @@ END //
 DELIMITER ;
 ```
 
+### 4. crear un trigger para mandar el equipo a disponible o mantenimiento
+
+```sql
+DELIMITER //
+CREATE TRIGGER trg_actualizar_estado_equipo_desde_detalle
+AFTER UPDATE ON detalle_prestamo
+FOR EACH ROW
+BEGIN
+    -- Verificar si el id_estado en detalle_prestamo se actualizó a 4 (Mantenimiento)
+    -- y si el valor realmente cambió para evitar ejecuciones innecesarias o recursión.
+    IF NEW.id_estado = 4 AND NEW.id_estado <> OLD.id_estado THEN
+        -- Actualizar el id_estado en la tabla equipos
+        UPDATE equipos
+        SET id_estado = 4 -- Mantenimiento
+        WHERE equipo_id = NEW.equipo_id; -- Usar NEW.equipo_id de la fila actualizada en detalle_prestamo
+    END IF;
+END //
+DELIMITER ;
+```
+
 ///FIN DEL MODULO DE DEVOLUCIONES///
 ///--------------------------------------------------------------------------------------------------------------------------------///
 
