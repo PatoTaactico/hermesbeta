@@ -165,4 +165,39 @@ REGISTRAR MOTIVO DE MANTENIMIENTO
         $stmt = null;
     }
 
+        /*=============================================
+    MARCAR EQUIPO COMO DISPONIBLE EN DETALLE_PRESTAMO
+    =============================================*/
+    static public function mdlMarcarDisponible($tabla, $datos) {
+        try {
+            $stmt = Conexion::conectar()->prepare(
+                "UPDATE $tabla 
+                SET estado = 'Devuelto', id_estado = :id_estado 
+                WHERE id_prestamo = :id_prestamo AND equipo_id = :equipo_id"
+            );
+            
+            $stmt->bindParam(":id_estado", $datos["id_estado"], PDO::PARAM_INT);
+            $stmt->bindParam(":id_prestamo", $datos["id_prestamo"], PDO::PARAM_INT);
+            $stmt->bindParam(":equipo_id", $datos["equipo_id"], PDO::PARAM_INT);
+            
+            if($stmt->execute()) {
+                // Verificar si se actualizó alguna fila
+                if($stmt->rowCount() > 0) {
+                    return "ok";
+                } else {
+                    error_log("No se actualizó ninguna fila - ¿Existe el préstamo y equipo?");
+                    return "no_change";
+                }
+            } else {
+                error_log("Error en execute(): " . json_encode($stmt->errorInfo()));
+                return "error";
+            }
+        } catch (PDOException $e) {
+            error_log("Excepción en mdlMarcarDisponible: " . $e->getMessage());
+            return "error";
+        }
+        
+        $stmt = null;
+    }
+
 }

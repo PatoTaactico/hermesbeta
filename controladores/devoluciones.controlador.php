@@ -85,5 +85,56 @@ ENVIAR EQUIPO A MANTENIMIENTO CON MOTIVO
 		}
 	}
 
+		/*=============================================
+	MARCAR EQUIPO COMO DISPONIBLE
+	=============================================*/
+	static public function ctrMarcarDisponible($idPrestamo, $idEquipo) {
+		// 1. Marcar el equipo en detalle_prestamo como Devuelto (estado = 'Devuelto') y disponible (id_estado = 1)
+		$tablaDetalle = "detalle_prestamo";
+		$datosDetalle = array(
+			"id_prestamo" => $idPrestamo,
+			"equipo_id" => $idEquipo,
+			"id_estado" => 1 // Disponible
+		);
+		
+		$respuestaMarcado = ModeloDevoluciones::mdlMarcarDisponible($tablaDetalle, $datosDetalle);
+		
+		if($respuestaMarcado == "ok") {
+			// Verificar si todos los equipos del préstamo han sido devueltos
+			$todosDevueltos = ModeloDevoluciones::mdlVerificarTodosEquiposDevueltos($idPrestamo);
+			
+			if($todosDevueltos) {
+				// Actualizar estado del préstamo a "Devuelto"
+				$respuestaPrestamo = ModeloDevoluciones::mdlActualizarPrestamoDevuelto($idPrestamo);
+				
+				if($respuestaPrestamo == "ok") {
+					return array(
+						"success" => true,
+						"status" => "prestamo_completo_devuelto",
+						"message" => "Equipo marcado como disponible y préstamo completado"
+					);
+				} else {
+					return array(
+						"success" => true,
+						"status" => "equipo_devuelto_prestamo_no_actualizado",
+						"message" => "Equipo disponible pero error al actualizar préstamo"
+					);
+				}
+			} else {
+				return array(
+					"success" => true,
+					"status" => "equipo_devuelto",
+					"message" => "Equipo marcado como disponible correctamente"
+				);
+			}
+		} else {
+			return array(
+				"success" => false,
+				"status" => "error_marcado_equipo",
+				"message" => "Error al marcar el equipo como disponible"
+			);
+		}
+	}
+
 }
 ?>
