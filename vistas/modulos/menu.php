@@ -158,9 +158,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="recepcion" class="nav-link">
+                <a href="reporte-equipos" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Recepción</p>
+                  <p>Reportes</p>
                 </a>
               </li>
             </ul>';
@@ -337,9 +337,9 @@ echo'<li class="nav-item">
           
           <!-- Nombre y Apellido (No editable) -->
           <div class="form-group">
-            <label>Nombre y Apellido</label>
             <div class="row">
               <div class="col-lg-6">
+                <label>Nombre</label>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -348,6 +348,7 @@ echo'<li class="nav-item">
                 </div>
               </div>
               <div class="col-lg-6">
+                <label>Apellido</label>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -358,23 +359,25 @@ echo'<li class="nav-item">
             </div>
           </div>
           
-          <!-- Campo para subir la foto de perfil -->
-          <div class="form-group">
-            <label for="fotoPerfil">Cambiar foto de perfil</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-camera"></i></span>
+           <!-- Campo para subir la foto de perfil -->
+          <div class="form-group text-center foto-perfil-container">
+              <label>Cambiar foto de perfil</label>
+              <div>
+                  <input type="file" id="fotoPerfil" name="editarFoto" accept="image/*" onchange="previewImage(event)">
+                  <label for="fotoPerfil">
+                      <span class="btn-foto-perfil">
+                          <i class="fas fa-images"></i>
+                      </span>
+                  </label>
               </div>
-              <input type="file" class="form-control" id="fotoPerfil" name="editarFoto" accept="image/*" onchange="previewImage(event)">
-            </div>
-            <small class="form-text text-muted">Formato permitido: JPG, PNG. Tamaño máximo: 2MB.</small>
+              <small class="form-text text-muted">Haz clic en el ícono de galería para seleccionar una nueva foto (JPG, PNG, máx. 2MB).</small>
           </div>
-          
+
           <!-- Información de Identificación (No editable) -->
           <div class="form-group">
-            <label>Identificación</label>
             <div class="row">
               <div class="col-lg-6">
+                <label>Tipo</label>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-id-card"></i></span>
@@ -383,6 +386,7 @@ echo'<li class="nav-item">
                 </div>
               </div>
               <div class="col-lg-6">
+                <label>Número de documento</label>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-id-card"></i></span>

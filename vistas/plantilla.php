@@ -101,6 +101,7 @@
           $_GET["ruta"] == "salidas" ||
           $_GET["ruta"] == "reportes" ||
           $_GET["ruta"] == "Mantenimiento" ||
+          $_GET["ruta"] == "reporte-equipos" ||
           $_GET["ruta"] == "desactivado" ||
           $_GET["ruta"] == "auditoria" ||
           $_GET["ruta"] == "salir") {
