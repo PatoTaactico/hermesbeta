@@ -34,8 +34,8 @@ $(document).ready(function() {
 
                     // Información del préstamo
                     $('#prestamoIdentificacion').text(datosPrestamo.numero_documento || 'No disponible');
-                    $('#prestamoNombre').text(datosPrestamo.nombre || 'No disponible');
-                    $('#prestamoApellido').text(datosPrestamo.apellido || 'No disponible');
+                    $('#prestamoNombre').text(datosPrestamo.nombre_usuario || 'No disponible');
+                    $('#prestamoApellido').text(datosPrestamo.apellido_usuario || 'No disponible');
                     $('#prestamoTelefono').text(datosPrestamo.telefono || 'No disponible');
                     $('#prestamoFicha').text(datosPrestamo.ficha_codigo || 'No asignada');
                     $('#prestamoTipo').text(datosPrestamo.tipo_prestamo || 'No especificado');

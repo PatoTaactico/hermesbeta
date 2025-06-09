@@ -66,9 +66,10 @@ class ModeloUsuarios{
         if ($item != null) {
             $stmt = Conexion::conectar()->prepare("SELECT u.*, 
                                                             r.id_rol, r.nombre_rol, 
-                                                            f.id_ficha, f.descripcion AS descripcion_ficha, f.codigo, 
+                                                            f.id_ficha, f.descripcion AS descripcion_ficha, f.codigo, f.estado AS estado_ficha,
                                                             s.id_sede, s.nombre_sede,
                                                             u.id_usuario
+                                                            -- f.estado se llamo para mostrar el estado de la ficha en solicitudes
                                                             -- u.nombre,
                                                             -- u.apellido
                                                     FROM $tabla as u      
@@ -233,6 +234,26 @@ class ModeloUsuarios{
             $conexion = null;
         }
     }
+
+    // Cambiar condición de usuario (solo admin puede cambiar)
+    public static function mdlCambiarCondicionUsuario($tabla, $datos) {
+    try {
+        $stmt = Conexion::conectar()->prepare(
+            "UPDATE $tabla SET condicion = :condicion WHERE id_usuario = :id_usuario"
+        );
+        
+        $stmt->bindParam(":condicion", $datos["condicion"], PDO::PARAM_STR);
+        $stmt->bindParam(":id_usuario", $datos["id_usuario"], PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return "ok";
+        }
+        return "error";
+    } catch(PDOException $e) {
+        error_log("Error en mdlCambiarCondicionUsuario: " . $e->getMessage());
+        return "error";
+    }
+}
 
     // Cambiar estado usuario con auditoría
     static public function mdlCambiarEstadoUsuario($tabla, $datos) {

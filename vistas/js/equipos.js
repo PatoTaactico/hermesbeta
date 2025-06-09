@@ -227,8 +227,9 @@ BOTÓN PARA MOSTRAR LOS DATOS DE LA UBICACIÓN ACTUAL
 ================================================== */
 
 $(document).on("click", ".btnTraspasarUbicacion", function() {
-    idEquipoTraspasoUbicacion = $(this).attr("idEquipoTraspasoUbicacion"); //Id del equipo
-    console.log(idEquipoTraspasoUbicacion);
+    //capturamos el id del boton para llenar el formulario
+    let idEquipoTraspasoUbicacion = $(this).attr("idEquipoTraspasoUbicacion"); //Id del equipo
+    console.log("equipo a trasladar:",idEquipoTraspasoUbicacion);
 
     let datos = new FormData();
     datos.append("idEquipoTraspasoUbicacion", idEquipoTraspasoUbicacion);
@@ -243,9 +244,10 @@ $(document).on("click", ".btnTraspasarUbicacion", function() {
             dataType: "json",
             success: function(resultado){
                 console.log(resultado);
-                // console.log("ubicacion_id hola: ", resultado["ubicacion_id"]);
+                // el idTraspasoUbicacion es el id del equipo en el input hidden (diferente del boton)
+                $("#idTraspasoUbicacion").val(resultado["equipo_id"]); // el id hidden
                 $("#ubicacionActualId").val(resultado["ubicacion_id"]); // el id hidden
-                $("#ubicacionActual").val(resultado["ubicacion_id"] + " " + resultado["nombre_ubicacion"]);
+                $("#ubicacionActual").val(resultado["ubicacion_id"] + " " + resultado["ubicacion_nombre"]);
                 // $("#nuevaUbicacionId").val();
             }
     });
@@ -255,25 +257,24 @@ $(document).on("click", ".btnTraspasarUbicacion", function() {
 BOTÓN PARA AGREGAR AL INPUT DE LA NUEVA UBICACIÓN DEL EQUIPO
 ================================================== */
 
-$(document).on("change", "#nuevaUbicacionId", function() {
-    var nuevaUbicacionId = $(this).val(); // Capturando la ubicación id según el select
-    console.log("id ubicacion destino: ", nuevaUbicacionId);
+// $(document).on("change", "#nuevaUbicacionId", function() {
+//     var nuevaUbicacionId = $(this).val(); // Capturando la ubicación id según el select
+//     // console.log("id ubicacion destino: ", nuevaUbicacionId);
+//     var datos = new FormData();
+//     datos.append("nuevaUbicacionId", nuevaUbicacionId);
 
-    var datos = new FormData();
-    datos.append("nuevaUbicacionId", nuevaUbicacionId);
-
-    $.ajax({
-        url: "ajax/equipos.ajax.php",
-            method: "POST",
-            data: datos,
-            cache: false,
-            contentType: false,
-            processData: false,
-            dataType: "json",
-            success: function(resultado){
-                console.log("RESULTADO: ", resultado);
-                $("#idTraspasoUbicacion").val(resultado["equipo_id"]);
-                $("#nuevaUbicacionId").val(resultado["ubicacion_id"]);
-            }
-    })
-});
+//     $.ajax({
+//         url: "ajax/equipos.ajax.php",
+//             method: "POST",
+//             data: datos,
+//             cache: false,
+//             contentType: false,
+//             processData: false,
+//             dataType: "json",
+//             success: function(resultado){
+//                 console.log("RESULTADO: ", resultado);
+//                 // $("#idTraspasoUbicacion").val(resultado["equipo_id"]);
+//                 $("#nuevaUbicacionId").val(resultado["ubicacion_id"]);
+//             }
+//     })
+// });

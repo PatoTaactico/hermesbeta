@@ -36,7 +36,8 @@ class ControladorEquipos{
                     echo '<script>Swal.fire({
                         icon: "success",
                         title: "¡Equipo agregado correctamente!",
-                        confirmButtonText: "Cerrar"
+                        confirmButtonText: "Ok",
+                        confirmButtonColor: "#28a745"
                     }).then((result) => {
                         if (result.isConfirmed) {
                             window.location = "inventario";
@@ -46,7 +47,8 @@ class ControladorEquipos{
                     echo '<script>Swal.fire({
                         icon: "error",
                         title: "¡Error al agregar el equipo!",
-                        confirmButtonText: "Cerrar"
+                        confirmButtonText: "Cerrar",
+                        confirmButtonColor: "#d84c4c"
                     }).then((result) => {
                         if (result.isConfirmed) {
                             window.location = "inventario";
@@ -59,7 +61,8 @@ class ControladorEquipos{
                 Swal.fire({
                     icon: "error",
                     title: "¡Error, caracteres ingresados no válidos!",
-                    confirmButtonText: "Cerrar"
+                    confirmButtonText: "Cerrar",
+                    confirmButtonColor: "#d84c4c"
                 }).then((result) => {
                     if (result.isConfirmed) {
                         window.location = "inventario";
@@ -93,7 +96,8 @@ class ControladorEquipos{
                             icon: "success",
                             title: "¡El equipo ha sido editado correctamente!",
                             showConfirmButton: true,
-                            confirmButtonText: "Cerrar"
+                            confirmButtonText: "Cerrar",
+                            confirmButtonColor: "#28a745"
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 window.location = "inventario";
@@ -106,7 +110,8 @@ class ControladorEquipos{
                             icon: "error",
                             title: "¡Error al editar el equipo!",
                             showConfirmButton: true,
-                            confirmButtonText: "Cerrar"
+                            confirmButtonText: "Cerrar",
+                            confirmButtonColor: "#d84c4c"
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 window.location = "inventario";
@@ -114,6 +119,20 @@ class ControladorEquipos{
                         });
                     </script>';
                 }
+            } else {
+                echo '<script>
+                        Swal.fire({
+                            icon: "error",
+                            title: "¡Error, no se aceptan caracteres especiales!",
+                            showConfirmButton: true,
+                            confirmButtonText: "Cerrar",
+                            confirmButtonColor: "#d84c4c"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location = "inventario";
+                            }
+                        });
+                    </script>';
             } 
             
         }
@@ -153,17 +172,20 @@ class ControladorEquipos{
                 "equipo_id" => $_POST["idTraspasoUbicacion"],
                 "ubicacion_id" => $_POST["nuevaUbicacionId"]
             );
+            // mostramos el array de datos en error_log para debug
+            error_log(print_r($datos, true));            
 
             $respuesta = ModeloEquipos::mdlRealizarTraspasoUbicacion($tabla, $datos);
             // var_dump($respuesta);
-            error_log($respuesta);
+            // error_log($respuesta);
             if($respuesta == "ok"){
                 echo '<script>
                         swal.fire({
                             icon: "success",
                             title: "¡Traspaso de ubicación realizado con éxito!",
                             showConfirmButton: true,
-                            confirmButtonText: "Cerrar"
+                            confirmButtonText: "Ok",
+                            confirmButtonColor: "#28a745"
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 window.location = "inventario";
@@ -176,7 +198,8 @@ class ControladorEquipos{
                             icon: "error",
                             title: "¡Traspaso de ubicación fallido!",
                             showConfirmButton: true,
-                            confirmButtonText: "Cerrar"
+                            confirmButtonText: "Cerrar",
+                            confirmButtonColor: "#d84c4c"
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 window.location = "inventario";
@@ -205,7 +228,8 @@ class ControladorEquipos{
                             icon: "success",
                             title: "¡Traspaso realizado con éxito!",
                             showConfirmButton: true,
-                            confirmButtonText: "Cerrar"
+                            confirmButtonText: "Ok",
+                            confirmButtonColor: "#28a745"
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 window.location = "inventario";
@@ -218,7 +242,8 @@ class ControladorEquipos{
                             icon: "error",
                             title: "Algo ha fallado. No se realizaron cambios",
                             showConfirmButton: true,
-                            confirmButtonText: "Cerrar"
+                            confirmButtonText: "Cerrar",
+                            confirmButtonColor: "#d84c4c"
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 window.location = "inventario";

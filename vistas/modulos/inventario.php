@@ -341,7 +341,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
                   </div>
-                  <input type="hidden" id="ubicacionActualId" name="ubicacionActualId">
+                  <input type="hidden" id="ubicacionActualId" name="ubicacionActualId" value="">
                   <input type="text" class="form-control" id="ubicacionActual" name="ubicacionActual" readonly>
                 </div>
               </div>

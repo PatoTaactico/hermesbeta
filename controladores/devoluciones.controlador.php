@@ -79,7 +79,7 @@ MARCAR EQUIPO COMO ROBADO (BAJA)
 static public function ctrMarcarEquipoRobado($idPrestamo, $idEquipo){
     $datos = array(
         "equipo_id" => $idEquipo,
-        "id_estado" => 7 // Estado 'baja' para equipos robados
+        "id_estado" => 8 // Estado 'baja' para equipos robados
     );
 
     $respuestaMarcado = ModeloDevoluciones::mdlMarcarMantenimientoDetalle($datos);

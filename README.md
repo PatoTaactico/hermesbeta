@@ -10,8 +10,6 @@ Este archivo contiene instrucciones y consultas SQL que deben ejecutarse en la b
 
 ## Consultas y Procedimientos
 
-
-### 5.Agregar columna `foto` a la tabla `usuarios`
 ### Agregar columna `condicion` a la tabla `usuarios`
 
 Se debe agregar una columna llamada `condicion` de tipo `ENUM` a la tabla `usuarios`, ubicada después de la columna `estado`. Los posibles valores son `'penalizado'`, `'advertido'` y `'en_regla'`, siendo `'en_regla'` el valor por defecto.
@@ -59,25 +57,26 @@ ALTER TABLE usuarios
 ADD COLUMN foto VARCHAR(100) AFTER genero;
 ```
 
-### Ruta por defecto para la foto de usuario
+### 2. Ruta por defecto para la foto de usuario
 
-Al crear un nuevo usuario, el valor por defecto de la columna `foto` debe ser:  
-`vistas/img/usuarios/default/anonymous.png`
+- Al crear un nuevo usuario, el valor por defecto de la columna `foto` debe ser:  
+    `vistas/img/usuarios/default/anonymous.png`
 
-### Creación automática de carpetas para fotos de usuario
+### 3. Creación automática de carpetas para fotos de usuario
 
-Cuando se crea un usuario nuevo:
-- Se debe crear automáticamente la carpeta `img` dentro de la carpeta `vistas` si no existe.
-- Dentro de `img`, se debe crear la carpeta `usuarios`.
-- Dentro de `usuarios`, se debe crear una carpeta con el número de documento del usuario.
-- En esa carpeta es donde se almacenará la foto del usuario.
+- Cuando se crea un usuario nuevo:
+    - Se debe crear automáticamente la carpeta `img` dentro de la carpeta `vistas` si no existe.
+    - Dentro de `img`, se debe crear la carpeta `usuarios`.
+    - Dentro de `usuarios`, se debe crear una carpeta con el número de documento del usuario.
+    - En esa carpeta es donde se almacenará la foto del usuario.
 
-### Ejemplo de actualización de datos
+### 4. Ejemplo de actualización de datos
 
 ```sql
--- Ejemplo: Actualizar la ruta de la foto para todos los usuarios existentes
+-- Ejemplo: Actualizar la ruta de la foto para un usuario existente
 UPDATE usuarios
-SET foto = 'vistas/img/usuarios/default/anonymous.png';
+SET foto = 'vistas/img/usuarios/default/anonymous.png'
+WHERE id_usuario = 1;
 ```
 
 
@@ -279,21 +278,4 @@ END$$
 
 DELIMITER ;
 ```
-<<<<<<<<< Temporary merge branch 1
--Este trigger compara los valores antiguos y nuevos de varios campos (como tipo_documento, nombre, apellido, correo_electronico, etc.) y, si detecta algún cambio, inserta un registro en la tabla auditoria_usuarios con los siguientes datos:
-
-ID del usuario afectado.
-
-ID del usuario que realizó el cambio.
-
-Campos modificados.
-
-Valores anteriores.
-
-Valores nuevos.
-
-Fecha del cambio
-
-=========
->>>>>>>>> Temporary merge branch 2
 
