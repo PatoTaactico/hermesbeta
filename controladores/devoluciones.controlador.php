@@ -46,32 +46,35 @@
 /*============================================= 
 MARCAR EQUIPO EN DETALLE_PRESTAMO COMO DEVUELTO EN BUEN ESTADO
 =============================================*/
-    static public function ctrMarcarDevueltoBuenEstado($idPrestamo, $idEquipo){
-        $datos = array(
-            "id_prestamo" => $idPrestamo,
-            "equipo_id" => $idEquipo,
-            "id_estado" => 1 // 1 = Disponible
-        );
+static public function ctrMarcarDevueltoBuenEstado($idPrestamo, $idEquipo){
+    $datos = array(
+        "id_prestamo" => $idPrestamo,
+        "equipo_id" => $idEquipo,
+        "id_estado" => 1 // 1 = Disponible
+    );
 
-        $respuestaMarcado = ModeloDevoluciones::mdlMarcarDevueltoBuenEstado($datos);
+    // 1. Marcar equipo como devuelto
+    $respuestaMarcado = ModeloDevoluciones::mdlMarcarDevueltoBuenEstado($datos);
 
-        if($respuestaMarcado == "ok"){
-            $todosDevueltos = ModeloDevoluciones::mdlVerificarTodosEquiposDevueltos($idPrestamo);
-
-            if($todosDevueltos){
-                $respuestaActualizacionPrestamo = ModeloDevoluciones::mdlActualizarPrestamoDevuelto($idPrestamo);
-                if($respuestaActualizacionPrestamo == "ok"){
-                    return "ok_prestamo_actualizado";
-                } else {
-                    return "error_actualizando_prestamo";
-                }
-            } else {
-                return "ok";
-            }
-        } else {
-            return $respuestaMarcado;
+    if($respuestaMarcado == "ok"){
+        // 2. Actualizar fecha de devolución
+        $respuestaFecha = ModeloDevoluciones::mdlActualizarFechaDevolucion($idPrestamo);
+        
+        if($respuestaFecha != "ok"){
+            return "error_actualizando_fecha";
         }
+
+        // 3. Verificar si todos los equipos están devueltos
+        $todosDevueltos = ModeloDevoluciones::mdlVerificarTodosEquiposDevueltos($idPrestamo);
+
+        if($todosDevueltos){
+            $respuestaPrestamo = ModeloDevoluciones::mdlActualizarPrestamoDevuelto($idPrestamo);
+            return ($respuestaPrestamo == "ok") ? "ok_prestamo_actualizado" : "error_actualizando_prestamo";
+        }
+        return "ok";
     }
+    return $respuestaMarcado;
+}
 
 /*=============================================
 MARCAR EQUIPO COMO ROBADO (BAJA)
@@ -100,33 +103,33 @@ static public function ctrMarcarEquipoRobado($idPrestamo, $idEquipo){
     =============================================*/
     static public function ctrMarcarMantenimientoConMotivo($idPrestamo, $idEquipo, $motivo) {
         try {
-            // 1. Actualizar estado del equipo a Mantenimiento (id_estado = 4)
+            // 1. Actualizar estado del equipo
             $datosEquipo = array(
                 "equipo_id" => $idEquipo,
-                "id_estado" => 4 // 4 = Mantenimiento
+                "id_estado" => 4 // Mantenimiento
             );
-
+    
             $respuestaMarcado = ModeloDevoluciones::mdlMarcarMantenimientoDetalle($datosEquipo);
             
             if($respuestaMarcado != "ok") {
                 return array(
                     "success" => false,
                     "status" => "error_actualizando_equipo",
-                    "message" => "Error al actualizar el estado del equipo a mantenimiento."
+                    "message" => "Error al actualizar el estado del equipo."
                 );
             }
-
-            // 2. Registrar el motivo en la tabla mantenimiento
+    
+            // 2. Registrar motivo
             $respuestaMotivo = ModeloDevoluciones::mdlRegistrarMotivoMantenimiento($idEquipo, $motivo);
             
             if($respuestaMotivo != "ok") {
                 return array(
                     "success" => false,
                     "status" => "error_registrando_motivo",
-                    "message" => "Error al registrar el motivo de mantenimiento."
+                    "message" => "Error al registrar el motivo."
                 );
             }
-
+    
             // 3. Actualizar detalle_prestamo
             $stmtDetalle = Conexion::conectar()->prepare(
                 "UPDATE detalle_prestamo SET estado = 'Devuelto', 
@@ -138,15 +141,24 @@ static public function ctrMarcarEquipoRobado($idPrestamo, $idEquipo){
             $stmtDetalle->bindParam(":equipo_id", $idEquipo, PDO::PARAM_INT);
             
             if(!$stmtDetalle->execute()) {
-                error_log("Error al actualizar detalle_prestamo: " . json_encode($stmtDetalle->errorInfo()));
                 return array(
                     "success" => false,
                     "status" => "error_actualizando_detalle",
-                    "message" => "Error al actualizar el detalle del préstamo."
+                    "message" => "Error al actualizar el detalle."
                 );
             }
-
-            // 4. Verificar si todos los equipos están devueltos
+    
+            // 4. Actualizar fecha de devolución
+            $respuestaFecha = ModeloDevoluciones::mdlActualizarFechaDevolucion($idPrestamo);
+            if($respuestaFecha != "ok") {
+                return array(
+                    "success" => false,
+                    "status" => "error_actualizando_fecha",
+                    "message" => "Error al registrar fecha de devolución."
+                );
+            }
+    
+            // 5. Verificar si todos los equipos están devueltos
             $todosDevueltos = ModeloDevoluciones::mdlVerificarTodosEquiposDevueltos($idPrestamo);
             
             if($todosDevueltos) {
@@ -155,32 +167,29 @@ static public function ctrMarcarEquipoRobado($idPrestamo, $idEquipo){
                     return array(
                         "success" => true,
                         "status" => "ok_prestamo_actualizado",
-                        "message" => "Equipo enviado a mantenimiento y préstamo marcado como devuelto."
+                        "message" => "Equipo en mantenimiento y préstamo completado."
                     );
                 } else {
                     return array(
                         "success" => true,
                         "status" => "ok",
-                        "message" => "Equipo enviado a mantenimiento, pero hubo un error al actualizar el préstamo principal."
+                        "message" => "Equipo en mantenimiento, pero error al actualizar préstamo."
                     );
                 }
             }
-
+    
             return array(
                 "success" => true,
                 "status" => "ok",
                 "message" => "Equipo enviado a mantenimiento correctamente."
             );
-
+    
         } catch (PDOException $e) {
-            error_log("Excepción en ctrMarcarMantenimientoConMotivo: " . $e->getMessage());
             return array(
                 "success" => false,
                 "status" => "error_excepcion",
-                "message" => "Error interno del sistema al procesar la solicitud: " . $e->getMessage()
+                "message" => "Error: " . $e->getMessage()
             );
-        } finally {
-            $stmtDetalle = null;
         }
     }
 }

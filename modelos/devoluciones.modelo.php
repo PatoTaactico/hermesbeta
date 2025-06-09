@@ -223,4 +223,25 @@ REGISTRAR MOTIVO DE MANTENIMIENTO (adaptado a tu estructura de tabla)
         }
     }
 
+    /*=============================================
+ACTUALIZAR FECHA DE DEVOLUCIÓN REAL
+=============================================*/
+    static public function mdlActualizarFechaDevolucion($idPrestamo){
+        $stmt = Conexion::conectar()->prepare(
+            "UPDATE prestamos 
+            SET fecha_devolucion_real = NOW() 
+            WHERE id_prestamo = :id_prestamo"
+        );
+
+        $stmt->bindParam(":id_prestamo", $idPrestamo, PDO::PARAM_INT);
+
+        if($stmt->execute()){
+            return "ok";
+        } else {
+            return "error";
+        }
+
+        $stmt = null;
+    }
+
 }
