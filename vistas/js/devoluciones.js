@@ -15,6 +15,16 @@ $(document).ready(function() {
                 if(respuesta && respuesta.length > 0) {
                     var datosPrestamo = respuesta[0];
 
+                    // s eimplementa 
+                    if (respuesta.status === "ok_prestamo_actualizado") {
+                        $('#modalVerDetallesPrestamo').modal('hide');
+                        if (typeof tablaDevoluciones !== 'undefined') {
+                            tablaDevoluciones.ajax.reload();
+                        } else {
+                            window.location.reload();
+                        }
+                    }
+
                     // Imagen y datos básicos del usuario
                     $('#userImage').attr('src', datosPrestamo.foto ? datosPrestamo.foto : 'vistas/img/usuarios/default/anonymous.png');
                     $('#userName').text(datosPrestamo.nombre + ' ' + datosPrestamo.apellido);
