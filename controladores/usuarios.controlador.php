@@ -19,6 +19,7 @@ class ControladorUsuarios{
 
                 if ($respuesta["nombre_usuario"] == $_POST["ingUsuario"] && $respuesta["clave"] == $encriptar) 
                 {
+                    header("location: http://localhost:4200/");
                     if($respuesta["estado"] == "activo") {
                         // Iniciar sesión y guardar datos del usuario
                         $_SESSION["iniciarSesion"] = "ok";
