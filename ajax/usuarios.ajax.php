@@ -77,6 +77,17 @@ if (isset($_POST["idSolicitante"])) {
 if (isset($_POST["idUsuarioEstado"], $_POST["estado"])) {
     $id = $_POST["idUsuarioEstado"];
     $estado = $_POST["estado"];
+
+    // Validación: si se va a activar, verificar que tenga al menos un rol asociado
+    if ($estado === "activo") {
+        $roles = ModeloUsuarios::mdlObtenerRolesPorUsuario($id);
+        if (empty($roles)) {
+            // No tiene roles, no permitir activación
+            echo 'error_sin_rol';
+            exit;
+        }
+    }
+
     $respuesta = ControladorUsuarios::ctrCambiarEstadoUsuario($id, $estado);
     echo $respuesta ? 'ok' : 'error';
     exit;
@@ -94,3 +105,12 @@ if (isset($_POST["idUsuarioCondicion"], $_POST["condicion"])) {
     echo $respuesta;
     exit;
 }
+
+// ajax/usuarios.ajax.php
+if (isset($_POST["idUsuarioRoles"])) {
+    $idUsuario = intval($_POST["idUsuarioRoles"]);
+    $roles = ModeloUsuarios::mdlObtenerRolesPorUsuario($idUsuario);
+    echo json_encode($roles);
+    exit();
+}
+

@@ -1,8 +1,9 @@
 <?php
 
-    require_once "conexion.php";
+require_once "conexion.php";
 
-class ModeloRoles{
+class ModeloRoles
+{
 
     static public function mdlCrearRol($tabla, $datos)
     {
@@ -29,7 +30,7 @@ class ModeloRoles{
     {
         if ($item != null) {
             $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
-            $stmt->bindParam(":".$item, $valor, PDO::PARAM_INT);
+            $stmt->bindParam(":" . $item, $valor, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetch();
         } else {
@@ -81,4 +82,48 @@ class ModeloRoles{
         $stmt->close();
         $stmt = null;
     }
+
+
+    static public function mdlDesactivarUsuariosPorRol($idRol)
+    {
+        $stmt = Conexion::conectar()->prepare(
+            "UPDATE usuarios 
+            SET estado = 'inactivo' 
+            WHERE id_usuario IN (
+                SELECT id_usuario FROM usuario_rol WHERE id_rol = :id_rol
+            )"
+        );
+        $stmt->bindParam(":id_rol", $idRol, PDO::PARAM_INT);
+        $stmt->execute();
+        $stmt = null;
+    }
+
+    static public function mdlActivarUsuariosPorRol($idRol)
+    {
+        $stmt = Conexion::conectar()->prepare(
+            "UPDATE usuarios 
+            SET estado = 'activo' 
+            WHERE id_usuario IN (
+                SELECT id_usuario FROM usuario_rol WHERE id_rol = :id_rol
+            )"
+        );
+        $stmt->bindParam(":id_rol", $idRol, PDO::PARAM_INT);
+        $stmt->execute();
+        $stmt = null;
+    }
+
+    static public function mdlEliminarUsuarioRolPorRol($idRol)
+    {
+        $stmt = Conexion::conectar()->prepare("DELETE FROM usuario_rol WHERE id_rol = :id_rol");
+        $stmt->bindParam(":id_rol", $idRol, PDO::PARAM_INT);
+        $stmt->execute();
+        $stmt = null;
+    }
+    static public function mdlEliminarRol($tabla, $idRol)
+{
+    $stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id_rol = :id_rol");
+    $stmt->bindParam(":id_rol", $idRol, PDO::PARAM_INT);
+    $stmt->execute();
+    $stmt = null;
+}
 }

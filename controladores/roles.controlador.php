@@ -1,6 +1,7 @@
 <?php
 
-class ControladorRoles{
+class ControladorRoles
+{
     /*=============================================
     MOSTRAR ROLES
     ==============================================*/
@@ -18,8 +19,10 @@ class ControladorRoles{
     {
         if (isset($_POST["nombreRol"]) && isset($_POST["descripcionRol"])) {
             // Validate the input fields
-            if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ() ]+$/', $_POST["nombreRol"]) &&
-                preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ() ]+$/', $_POST["descripcionRol"])) {
+            if (
+                preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ() ]+$/', $_POST["nombreRol"]) &&
+                preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ() ]+$/', $_POST["descripcionRol"])
+            ) {
 
                 $tabla = "roles";
                 $datos = array(
@@ -81,8 +84,10 @@ class ControladorRoles{
     {
         if (isset($_POST["nombreEditRol"]) && isset($_POST["descripcionEditRol"]) && isset($_POST["idEditRol"])) {
             // Validate the input fields
-            if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ() ]+$/', $_POST["nombreEditRol"]) &&
-                preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ() ]+$/', $_POST["descripcionEditRol"])) {
+            if (
+                preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ() ]+$/', $_POST["nombreEditRol"]) &&
+                preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ() ]+$/', $_POST["descripcionEditRol"])
+            ) {
 
                 $tabla = "roles";
                 $datos = array(
@@ -133,6 +138,32 @@ class ControladorRoles{
                         }
                     });
                 </script>';
+            }
+        }
+    }
+
+    
+    /*=============================================
+    ELIMINAR ROL
+    ==============================================*/    
+    static public function ctrEliminarRol()
+    {
+        if (isset($_POST["idRolEliminar"])) {
+            $idRol = $_POST["idRolEliminar"];
+            if ($idRol >= 10) {
+                // 1. Desactivar usuarios asociados
+                ModeloRoles::mdlDesactivarUsuariosPorRol($idRol);
+                // 2. Eliminar relaciones usuario_rol
+                ModeloRoles::mdlEliminarUsuarioRolPorRol($idRol);
+                // 3. Eliminar el rol
+                $respuesta = ModeloRoles::mdlEliminarRol("roles", $idRol);
+                if ($respuesta == "ok") {
+                    echo 'ok';
+                } else {
+                    echo 'error';
+                }
+            } else {
+                echo 'error';
             }
         }
     }

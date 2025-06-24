@@ -1,3 +1,15 @@
+<head>
+
+    <script>
+        const usuarioActual = {
+            id: "<?php echo $_SESSION['id_usuario']; ?>",
+            cedula: "<?php echo $_SESSION['numero_documento']; ?>",
+             permisos: <?php echo json_encode($_SESSION['permisos']); ?>
+        };
+    </script>
+</head>
+
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -19,9 +31,9 @@
     <!-- Main content -->
     <section class="content">
 
-         <div class="container-fluid">
-              <!-- Info boxes -->
-              <div class="row">
+        <div class="container-fluid">
+            <!-- Info boxes -->
+            <div class="row">
 
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
@@ -237,13 +249,15 @@
                                                 <input type="text" class="form-control" name="nombreSolicitante"
                                                     id="nombreSolicitante" placeholder="Nombre solicitante" readonly>
                                             </div>
-                                            
+
                                             <div class="ficha-d d-none">
                                                 <div class="input-group ">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                        <span class="input-group-text"><i
+                                                                class="fas fa-user"></i></span>
                                                     </div>
-                                                    <input type="hidden" name="idSolicitanteFicha" id="idSolicitanteFicha">
+                                                    <input type="hidden" name="idSolicitanteFicha"
+                                                        id="idSolicitanteFicha">
                                                     <input type="text" class="form-control" name="fichaSolicitante"
                                                         id="fichaSolicitante" placeholder="Ficha Solicitante" readonly>
                                                 </div>
@@ -350,4 +364,6 @@
 
 
 </div>
+
+
 <!-- /.content-wrapper -->

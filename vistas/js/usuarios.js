@@ -222,6 +222,39 @@ $(document).on('click', '.btnActivarUsuario', function () {
     var estadoActual = $(this).data('estado'); // el estado al que se va a cambiar
     var boton = $(this);
 
+    // Solo validar si se va a activar
+    if (estadoActual === "activo") {
+        // Consultar si el usuario tiene roles asociados
+        $.ajax({
+            url: "ajax/usuarios.ajax.php",
+            method: "POST",
+            data: { idUsuarioRoles: idUsuario },
+            dataType: "json",
+            success: function (respuesta) {
+                if (respuesta.length === 0) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "No se puede activar",
+                        text: "El usuario no tiene un rol asignado. Asigne un rol antes de activar.",
+                    });
+                    return; // No continúa con la activación
+                } else {
+                    // Si tiene roles, proceder con la activación
+                    cambiarEstadoUsuario(boton, idUsuario, estadoActual);
+                }
+            },
+            error: function () {
+                Swal.fire("Error", "Fallo de conexión al verificar roles", "error");
+            }
+        });
+    } else {
+        // Si se va a desactivar, no hace falta validar roles
+        cambiarEstadoUsuario(boton, idUsuario, estadoActual);
+    }
+});
+
+// Función para cambiar el estado del usuario (tu lógica original)
+function cambiarEstadoUsuario(boton, idUsuario, estadoActual) {
     // Desactivar temporalmente el botón
     boton.prop('disabled', true);
 
@@ -248,17 +281,20 @@ $(document).on('click', '.btnActivarUsuario', function () {
                     boton.data('estado', 'activo');
                 }
                 boton.prop('disabled', false);
+            } else if (respuesta.trim() === "error_sin_rol") {
+                Swal.fire({
+                    icon: "warning",
+                    title: "No se puede activar",
+                    text: "El usuario no tiene un rol asignado. Asigne un rol antes de activar.",
+                });
+                boton.prop('disabled', false).html(textoOriginal);
             } else {
                 Swal.fire("Error", "No se pudo cambiar el estado", "error");
                 boton.prop('disabled', false).html(textoOriginal);
             }
-        },
-        error: function () {
-            Swal.fire("Error", "Fallo de conexión con el servidor", "error");
-            boton.prop('disabled', false).html(textoOriginal);
         }
     });
-});
+}
 
 
 $(document).on("change", "#selectSede", function() {

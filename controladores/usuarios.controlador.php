@@ -19,6 +19,7 @@ class ControladorUsuarios
                 $valor = $_POST["ingUsuario"];
 
                 $respuesta = ModeloUsuarios::mdlMostrarUsuarios($tabla, $item, $valor);
+
                 if (is_array($respuesta)) {
 
                     if ($respuesta["nombre_usuario"] == $_POST["ingUsuario"] && $respuesta["clave"] == $encriptar) {
@@ -32,6 +33,8 @@ class ControladorUsuarios
                             $_SESSION["foto"] = $respuesta["foto"];
                             $_SESSION["rol"] = $respuesta["id_rol"];
                             $_SESSION["nombre_rol"] = $respuesta["nombre_rol"];
+                            $_SESSION["numero_documento"] = $respuesta["numero_documento"];
+
 
                             // Obtener permisos del rol
                             $permisos = ModeloPermisos::mdlMostrarPermisos("id_rol", $respuesta["id_rol"]);
@@ -305,7 +308,8 @@ class ControladorUsuarios
 
     static public function ctrCambiarCondicionUsuario($idUsuario, $condicion)
     {
-        if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+        if (session_status() !== PHP_SESSION_ACTIVE)
+            session_start();
 
         // El rol del admin es (rol 9)
 
@@ -340,7 +344,8 @@ class ControladorUsuarios
                 preg_match('/^[a-zA-Z0-9#\- ]+$/', $_POST["editDireccion"])
             ) {
                 // Inicia sesión para obtener el ID del usuario que está haciendo la edición
-                if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+                if (session_status() !== PHP_SESSION_ACTIVE)
+                    session_start();
                 $idEditor = $_SESSION["id_usuario"] ?? null;
 
                 // Valida que haya sesión activa (usuario logueado)
@@ -475,7 +480,8 @@ class ControladorUsuarios
     static public function ctrCambiarEstadoUsuario($id, $estado)
     {
         // Iniciar sesión si aún no está activa
-        if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+        if (session_status() !== PHP_SESSION_ACTIVE)
+            session_start();
         $idEditor = $_SESSION["id_usuario"] ?? null;
 
         // Validar que haya sesión activa
@@ -576,13 +582,16 @@ class ControladorUsuarios
                             //     continue;
                             // }
                             // Validar que la ficha exista 
-                            $fichaExiste = ModeloFichas::mdlMostrarFichas("fichas", "id_ficha", $idFicha);
+                            $fichaExiste = ModeloFichas::mdlMostrarFichas("fichas", "codigo", $idFicha);
                             if (!$fichaExiste) {
                                 $usuariosFallidos[] = ["fila" => $row, "documento" => $numeroDocumento, "error" => "La Ficha ID '$idFicha' no existe ."];
                                 continue;
                             }
                             // $idSedeFinal = $idSede;
-                            $idFichaFinal = $idFicha;
+                            // $idFichaFinal = $idFicha;
+                            //traemos el id de la ficha que si existe
+                            $idFichaFinal = $fichaExiste["id_ficha"];
+
                         }
 
                         $encriptarPassword = crypt($numeroDocumento, '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');

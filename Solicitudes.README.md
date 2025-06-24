@@ -44,3 +44,6 @@ END;
 //
 
 DELIMITER ;
+
+-- Asignar un nuevo permiso a la tabla de permisos, para un funcionamiento de solicitudes
+INSERT INTO `permisos`( `id_modulo`, `nombre`, `descripcion`, `estado`) VALUES ('2','Buscar usuario a solicitar','Permite al usuario buscar el solicitante que va a reservar equipos o herramientas','activo');

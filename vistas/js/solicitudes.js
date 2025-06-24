@@ -18,7 +18,7 @@ $(document).on("click", "#btnBuscarSolicitante", function () {
       success: function (respuesta) {
         console.log(respuesta);
         if (respuesta == "error") {
-          
+
           alert("El solicitante no existe.");
         } else {
           $("#idSolicitante").val(respuesta["id_usuario"]);
@@ -27,10 +27,10 @@ $(document).on("click", "#btnBuscarSolicitante", function () {
 
           $("#fichaSolicitante").val("Ficha: " + respuesta["codigo"]);
           $("#fichaSolicitante").attr("disabled", true);
-          if (respuesta["nombre_rol"] == "Aprendiz"){
+          if (respuesta["nombre_rol"] == "Aprendiz") {
             if (respuesta["estado"] != "activo" || respuesta["estado_ficha"] != "activa") {
 
-              
+
 
               //estado del usuario
               if (respuesta["estado"] != "activo") {
@@ -53,7 +53,7 @@ $(document).on("click", "#btnBuscarSolicitante", function () {
                   .removeClass("bg-danger")
                   .addClass("bg-success");
               }
-              
+
 
               // Ocultar la info si alguno está mal
               $(".infoEquiposSolicitados").addClass("d-none");
@@ -80,21 +80,21 @@ $(document).on("click", "#btnBuscarSolicitante", function () {
             $(".ficha-d").addClass("d-none");
 
             //estado del usuario
-              if (respuesta["estado"] != "activo") {
-                $("#nombreSolicitante")
-                  .removeClass("bg-success")
-                  .addClass("bg-danger")
-                  .val(respuesta["nombre"] + " " + respuesta["apellido"] + " (" + respuesta["nombre_rol"] + ") - Inactivo");
-                  
-                  $(".infoEquiposSolicitados").addClass("d-none");
-              } else {
-                $("#nombreSolicitante").removeClass("bg-danger").addClass("bg-success");
-                $(".infoEquiposSolicitados").removeClass("d-none");
-              }
-            
-              
+            if (respuesta["estado"] != "activo") {
+              $("#nombreSolicitante")
+                .removeClass("bg-success")
+                .addClass("bg-danger")
+                .val(respuesta["nombre"] + " " + respuesta["apellido"] + " (" + respuesta["nombre_rol"] + ") - Inactivo");
 
-            
+              $(".infoEquiposSolicitados").addClass("d-none");
+            } else {
+              $("#nombreSolicitante").removeClass("bg-danger").addClass("bg-success");
+              $(".infoEquiposSolicitados").removeClass("d-none");
+            }
+
+
+
+
           }
         }
       },
@@ -107,6 +107,35 @@ $(document).on("click", "#btnBuscarSolicitante", function () {
     });
   }
 }); // End of click event for #btnBuscarSolicitante
+
+// validacion del rol, para que muestre en el input el numero de documento
+$(document).ready(function () {
+  console.log("usuarioActual:", usuarioActual);
+  console.log("Permisos:", usuarioActual.permisos);
+
+  if (usuarioActual.permisos.includes(31)) {
+    // Tiene permiso 31, Campo editable
+    $("#NumeroIdSolicitante")
+      .val("") 
+      .prop("readonly", false)
+      .prop("disabled", false); // por si algún otro script lo desactivó
+    
+  } else {
+    //  NO Tiene permiso 31, Pone la cedula por defecto
+    $("#NumeroIdSolicitante")
+      .val(usuarioActual.cedula)
+      .prop("readonly", true);
+
+    // Lanzar búsqueda automática del solicitante
+    $("#btnBuscarSolicitante").trigger("click");
+    
+  }
+});
+
+
+
+
+
 
 $('#reservation').on('apply.daterangepicker', function (ev, picker) {
   var fechaInicio = picker.startDate.format('YYYY-MM-DD');

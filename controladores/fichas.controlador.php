@@ -7,7 +7,7 @@ class ControladorFichas {
         
         if (isset($_POST["codigoFicha"]) && isset($_POST["descripcionFicha"])  && isset($_POST["id_sede"]) && isset($_POST["fechaInicio"]) && isset($_POST["fechaFin"])) {
             if (preg_match('/^[a-zA-Z0-9]+$/', $_POST["codigoFicha"]) && 
-                preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ \s]+$/', $_POST["descripcionFicha"])) {
+                preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ .\s]+$/', $_POST["descripcionFicha"])) {
 
                 $tabla = "fichas";
                 $datos = array(

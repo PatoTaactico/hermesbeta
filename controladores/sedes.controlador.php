@@ -8,8 +8,8 @@ class ControladorSedes
     static public function ctrCrearSede()
     {
         if (isset($_POST["nombreSede"])  && isset($_POST["direccionSede"]) && isset($_POST["descripcionSede"])) {
-            if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nombreSede"]) &&
-                preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["direccionSede"])) {
+            if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ .,]+$/', $_POST["nombreSede"]) &&
+                preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ .,#\-\/]+$/', $_POST["direccionSede"])) {
 
                 // var_dump($_POST["nombreSede"]);
                 // exit();

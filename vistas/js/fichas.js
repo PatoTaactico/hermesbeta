@@ -7,7 +7,7 @@ $('#tblFichas').DataTable({
     "serverSide": true,
     "sAjaxSource": "ajax/serverside/serverside.fichas.php",
     "columns": [
-        { "data": null },
+        { "data": "0" },
         { "data": "1" },
         { "data": "2" },
         { "data": "3" },
@@ -17,12 +17,12 @@ $('#tblFichas').DataTable({
         { "data": null }
     ],
     "columnDefs": [
-        {
-            "targets": [0],
-            "render": function(data, type, row, meta) {
-                return meta.row + 1;
-            },
-        },
+        // {
+        //     "targets": [0],
+        //     "render": function(data, type, row, meta) {
+        //         return meta.row + 1;
+        //     },
+        // },
         {
             "targets": [6],
             "render": function(data, type, row) {

@@ -63,14 +63,14 @@
               </tr>
             </thead>
 
-</table>
-
-            </div>
-          <!-- /.card-body -->
+          </table>
 
         </div>
         <!-- /.card-body -->
+
       </div>
+      <!-- /.card-body -->
+
 
     </section>
     <!-- /.content -->
