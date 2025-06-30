@@ -27,12 +27,22 @@ $('#tblEquipos').DataTable({
         {
             "targets": [-1],
             "render": function(data, type, row) {
-                return "<div class='btn-group'>" +
-                    "<button title='Editar equipo' class='btn btn-default btnEditarEquipo' idEquipo='" + row[0] + "' data-toggle='modal' data-target='#modalEditarEquipo'><i class='fas fa-edit'></i></button>" +
-                    "<button title='Traspaso de cuentadante' class='btn btn-default btnTraspasarEquipo' idEquipoTraspaso='" + row[0] + "' data-toggle='modal' data-target='#modalTraspaso'><i class='fas fa-share'></i></button>" +
-                    "<button title='Traspaso de ubicación' class='btn btn-default btnTraspasarUbicacion' idEquipoTraspasoUbicacion='" + row[0] + "' data-toggle='modal' data-target='#modalTraspasoUbicacion'><i class='fas fa-map-pin'></i></button>" +
-                    "<button title='Ver historial' class='btn btn-default btnHistorialEquipo' idEquipoHistorial='" + row[0] + "' data-toggle='modal' data-target='#modalHistorialEquipo'><i class='fas fa-clock'></i></button>" +
-                "</div>";
+                let botones = "<div class='btn-group'>";
+                if (usuarioActual["permisos"].includes(3)) {
+                    botones += "<button title='Editar equipo' class='btn btn-default btnEditarEquipo' idEquipo='" + row[0] + "' data-toggle='modal' data-target='#modalEditarEquipo'><i class='fas fa-edit'></i></button>";
+                }
+
+                if (usuarioActual["permisos"].includes(5)) {
+                    botones += "<button title='Traspaso de cuentadante' class='btn btn-default btnTraspasarEquipo' idEquipoTraspaso='" + row[0] + "' data-toggle='modal' data-target='#modalTraspaso'><i class='fas fa-share'></i></button>";
+                }
+
+                if (usuarioActual["permisos"].includes(4)) {
+                    botones += "<button title='Traspaso de ubicación' class='btn btn-default btnTraspasarUbicacion' idEquipoTraspasoUbicacion='" + row[0] + "' data-toggle='modal' data-target='#modalTraspasoUbicacion'><i class='fas fa-map-pin'></i></button>";
+                }
+                botones += "<button title='Ver historial' class='btn btn-default btnHistorialEquipo' idEquipoHistorial='" + row[0] + "' data-toggle='modal' data-target='#modalHistorialEquipo'><i class='fas fa-clock'></i></button>" +
+                    "</div>";
+
+                return botones;
             }
         }
     ],

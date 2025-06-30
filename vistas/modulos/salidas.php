@@ -30,7 +30,7 @@
                     <div class="card">
                         <div class="card-body">
                             <table id="tblSedes" class="table table-bordered table-striped">
-                                <thead>
+                                <thead class="bg-dark">
                                     <tr>
                                         <th>ID Préstamo</th>
                                         <th>Usuario</th>

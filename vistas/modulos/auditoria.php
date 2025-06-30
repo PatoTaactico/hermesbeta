@@ -19,7 +19,7 @@
                     <div class="card">
                         <div class="card-body">
                             <table id="tablaAuditoria" class="table table-bordered table-striped w-100">
-                                <thead>
+                                <thead class="bg-dark">
                                     <tr>
                                         <th>ID Usuario</th>
                                         <th>Tipo Doc.</th>

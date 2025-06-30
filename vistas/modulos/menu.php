@@ -146,7 +146,7 @@
               </li>
               </ul>';
         }
-        if (ControladorValidacion::validarPermisoSesion([19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30])) {
+        if (ControladorValidacion::validarPermisoSesion([1,2,3,4,5,6,32])) {
           echo '
             <li class="nav-item">
             <a href="#" class="nav-link">

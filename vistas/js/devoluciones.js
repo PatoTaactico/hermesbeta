@@ -80,6 +80,8 @@ $(document).ready(function() {
                     `;
                     
                     $('#equiposListContainer').html(equiposTableHtml);
+                    $('#idPrestamo').text(datosPrestamo.id_prestamo);
+                    $('#numeroPrestamo').text(datosPrestamo.id_prestamo);
                     $('#modalVerDetallesPrestamo').modal('show');
 
                 } else {

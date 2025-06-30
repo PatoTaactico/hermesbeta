@@ -32,16 +32,16 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <table id="tblRoles" class="table table-bordered table-striped table-hover">
-                                <thead class="bg-dark">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Descripción</th>
-                                    <th>Fecha de creación</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
+                            <table id="tblRoles" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Rol</th>
+                                        <th>Nombre</th>
+                                        <th>Descripción</th>
+                                        <th>Fecha de creación</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                     <?php

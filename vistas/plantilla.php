@@ -84,6 +84,14 @@ session_start();
       });
     </script>';
 
+    echo '<script>
+        const usuarioActual = {
+            id: '.$_SESSION['id_usuario'].',
+            cedula: '.$_SESSION['numero_documento'].',
+            permisos: '.json_encode($_SESSION['permisos']).'  
+        }
+    </script>';
+
     echo '<div class="wrapper">';
     include "modulos/cabezote.php";
     include "modulos/menu.php";

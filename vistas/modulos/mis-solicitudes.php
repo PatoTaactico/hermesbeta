@@ -29,13 +29,15 @@ if ($respuesta["estado"] == "inactivo") {
                         <table class="table table-bordered table-striped table-hover" id="tblMisPrestamosUsuario">
                             <thead class="bg-dark">
                                 <tr>
-                                    <th width="5%">#</th>
-                                    <th width="15%">Préstamo</th>
-                                    <th width="15%">Fecha Inicio</th>
-                                    <th width="15%">Fecha Fin</th>
-                                    <th width="10%">Estado</th>
-                                    <th width="20%">Motivo</th>
-                                    <th width="20%">Acciones</th>
+                                    <th># </th>
+                                    <th>Préstamo</th>
+                                    <th>Fecha Inicio</th>
+                                    <th>Fecha Fin</th>
+                                    <th>Estado</th>
+                                    <th>Coo</th>
+                                    <th>TiC</th>
+                                    <th>Alm</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,52 +45,45 @@ if ($respuesta["estado"] == "inactivo") {
                                 $item = "usuario_id";
                                 $valor = $_SESSION['id_usuario'];
                                 $prestamos = ControladorSolicitudes::ctrMostrarSolicitudes($item, $valor);
+                                // var_dump($prestamos);
                                 
                                 if(is_array($prestamos) && isset($prestamos[0]) && is_array($prestamos[0])) {
+                                    // Es un array de múltiples registros
                                     foreach($prestamos as $prestamo) {
+                                        $item = "id_prestamo";
+                                        $valor = $prestamo["id_prestamo"];
+                                        $autorizaciones = ControladorAutorizaciones::ctrMostrarAutorizaciones($item, $valor);
+                                        is_array($autorizaciones);
                                         echo '<tr>
                                                 <td>' . $prestamo["id_prestamo"] . '</td>
                                                 <td>' . $prestamo["tipo_prestamo"] . '</td>
                                                 <td>' . $prestamo["fecha_inicio"] . '</td>
                                                 <td>' . $prestamo["fecha_fin"]. '</td>
-                                                <td>';
-                                        
-                                        // Botón de estado con colores (estilo similar a usuarios.js)
-                                        switch($prestamo["estado_prestamo"]) {
-                                            case 'aprobado':
-                                                echo '<button class="btn btn-success">Aprobado</button>';
-                                                break;
-                                            case 'pendiente':
-                                                echo '<button class="btn btn-warning">Pendiente</button>';
-                                                break;
-                                            case 'rechazado':
-                                                echo '<button class="btn btn-danger">Rechazado</button>';
-                                                break;
-                                            case 'devuelto':
-                                                echo '<button class="btn btn-info">Devuelto</button>';
-                                                break;
-                                            default:
-                                                echo '<button class="btn btn-secondary">' . $prestamo["estado_prestamo"] . '</button>';
-                                        }
-                                        
-                                        echo '</td>
-                                                <td>' . $prestamo["motivo"]. '</td>
-                                                <td>
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-default btnVerDetalle" idPrestamo="'. $prestamo["id_prestamo"]. '" title="Detalles" data-toggle="modal" data-target="#modalMisDetalles">
-                                                            <i class="fas fa-eye"></i>
-                                                        </button>
-                                                        <button class="btn btn-default btnRenovar" title="Renovar préstamo">
-                                                            <i class="fas fa-sync-alt"></i>
-                                                        </button>
-                                                        <button class="btn btn-default btnCancelar" title="Cancelar solicitud">
-                                                            <i class="fas fa-times"></i>
-                                                        </button>
-                                                        <button class="btn btn-default btnComprobante" title="Descargar comprobante">
-                                                            <i class="fas fa-file-pdf"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
+                                                <td>' . $prestamo["estado_prestamo"]. '</td>';
+                                                if ($prestamo["tipo_prestamo"] != "Inmediato"){
+                                                    if (isset($autorizaciones["firma_coordinacion"]) && $autorizaciones["firma_coordinacion"] == "Firmado") { // Aqqui
+                                                        echo '<td><input type="checkbox" checked disabled>' . '</td>';
+                                                    } else {
+                                                        echo '<td><input type="checkbox" disabled>' . '</td>';
+                                                    }
+                                                    if (isset($autorizaciones["firma_lider_tic"]) && $autorizaciones["firma_lider_tic"] == "Firmado") { // aqqui
+                                                        echo '<td><input type="checkbox" checked disabled></td>';
+                                                    } else {
+                                                        echo '<td><input type="checkbox" disabled>' . '</td>';
+                                                    }
+                                                    if (isset($autorizaciones["firma_almacen"]) && $autorizaciones["firma_almacen"] == "Firmado") { //Aqui
+                                                        echo '<td><input type="checkbox" checked disabled>' . '</td>';
+                                                    } else {
+                                                        echo '<td><input type="checkbox" disabled>' . '</td>';
+                                                    }
+                                                } else {
+                                                    echo '<td><i class="fas fa-ban text-danger" title="No se solicita"></i></td>';
+                                                    echo '<td><i class="fas fa-ban text-danger" title="No se solicita"></i></td>';
+                                                    echo '<td><i class="fas fa-ban text-danger" title="No se solicita"></i></td>';
+                                                }
+                                                echo '<td>';
+                                                    echo '<button class="btn btn-default btnVerDetalle" idPrestamo="'. $prestamo["id_prestamo"] . '" title="Detalles del prestamo" data-toggle="modal" data-target="#modalMisDetalles"><i class="fas fa-eye"></i></button>';
+                                                '</td>
                                             </tr>';
                                     }
                                 } else if(is_array($prestamos) && isset($prestamos[0])) {

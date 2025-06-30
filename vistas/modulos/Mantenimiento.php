@@ -25,7 +25,7 @@
           <div class="card">
             <div class="card-body">
               <table id="tblMantenimiento" class="table table-bordered table-striped">
-                <thead>
+                <thead class="bg-dark">
                   <tr>
                     <th>ID</th>
                     <th>Numero de serie</th>

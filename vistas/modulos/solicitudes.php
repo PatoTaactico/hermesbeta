@@ -1,13 +1,8 @@
-<head>
+<!-- <head>
 
     <script>
-        const usuarioActual = {
-            id: "<?php echo $_SESSION['id_usuario']; ?>",
-            cedula: "<?php echo $_SESSION['numero_documento']; ?>",
-             permisos: <?php echo json_encode($_SESSION['permisos']); ?>
-        };
     </script>
-</head>
+</head> -->
 
 
 <!-- Content Wrapper. Contains page content -->
@@ -116,7 +111,7 @@
                 <div class="col-md-7">
                     <div class="card">
 
-                        <div class="card-header">
+                        <div class="card-header bg-dark">
                             <h1 class="card-title">EQUIPOS</h1>
                         </div>
 
@@ -182,7 +177,7 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <table id="tblActivosSolicitar" class="table table-bordered table-striped">
-                                            <thead>
+                                            <thead class="bg-dark">
                                                 <tr>
                                                     <th>Descripción</th>
                                                     <th>Serial</th>
@@ -232,7 +227,7 @@
                 <div class="col-md-5">
                     <div class="card">
 
-                        <div class="card-header">
+                        <div class="card-header bg-dark">
                             <h1 class="card-title">SOLICITUD</h1>
                         </div>
 
