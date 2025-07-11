@@ -39,7 +39,7 @@
               $valor = null;
               $prestamos = ControladorSolicitudes::ctrMostrarPrestamo($item, $valor);
               foreach ($prestamos as $key => $value) {
-                if ($value["tipo_prestamo"] == "Reservado") {
+                if ($value["tipo_prestamo"] == "Reservado" && $value["estado_prestamo"] != "Prestado" && $value["estado_prestamo"] != "Devuelto") {
                   $item = "id_prestamo";
                   $valor = $value["id_prestamo"];
                   $autorizaciones = ControladorAutorizaciones::ctrMostrarAutorizaciones($item, $valor);

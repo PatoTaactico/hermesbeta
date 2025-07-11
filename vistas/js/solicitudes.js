@@ -204,17 +204,56 @@ $('#reservation').on('apply.daterangepicker', function (ev, picker) {
         alert("No se encontraron resultados.");
       } else {
 
-        console.log("actualizar datatable con los resultados");
+        //  destruir la tabla si existe
+        if ($.fn.DataTable.isDataTable('#tblActivosSolicitar')) {
+          $('#tblActivosSolicitar').DataTable().clear().destroy();
+        };
+        // Inicializar el DataTable
+        $('#tblActivosSolicitar').DataTable({
+          "responsive": true,
+          "autoWidth": false,
+          "lengthChange": false,
+          "info": true,
+          "paging": true,
+          "language": {
+            "lengthMenu": "Mostrar _MENU_ registros",
+            "zeroRecords": "Selecciones un rango de fechas",
+            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "No hay equipos disponibles",
+            "infoFiltered": "(filtrado de _MAX_ total registros)",
+            "search": "Buscar:",
+            "paginate": {
+              "first":      "Primero",
+              "last":       "Ultimo",
+              "next":       "Siguiente",
+              "previous":   "Anterior"
+            }
+          },
+          "data": respuesta.map(function (item) {
+            return [
+              item.descripcion, // Reemplazar con el nombre real del campo para la descripción
+              item.etiqueta, // Reemplazar con el nombre real del campo para la etiqueta
+              item.categoria_nombre, // Reemplazar con el nombre real del campo para el nombre de la categoría
+              item.ubicacion_nombre, // Reemplazar con el nombre real del campo para el nombre de la ubicación
+              '<button class="btn btn-primary btn-sm btnAgregarEquipo recoverButton" idEquipoAgregar="' + item["equipo_id"] + '"><i class="fas fa-plus"></i> Agregar</button>' // Botón para agregar el activo
+            ];
+          })
+
+
+
+        });
+
+        // console.log("actualizar datatable con los resultados");
         // Actualizar los resultados obtenidos
-        $('#tblActivosSolicitar').DataTable().clear().rows.add(respuesta.map(function (item) {
-          return [
-            item.descripcion, // Reemplazar con el nombre real del campo para la descripción
-            item.etiqueta, // Reemplazar con el nombre real del campo para la etiqueta
-            item.categoria_nombre, // Reemplazar con el nombre real del campo para el nombre de la categoría
-            item.ubicacion_nombre, // Reemplazar con el nombre real del campo para el nombre de la 
-            '<button class="btn btn-primary btn-sm btnAgregarEquipo recoverButton" idEquipoAgregar="' + item["equipo_id"] + '"><i class="fas fa-plus"></i> Agregar</button>' // Botón para agregar el activo
-          ];
-        })).draw();
+        // $('#tblActivosSolicitar').DataTable().clear().rows.add(respuesta.map(function (item) {
+        //   return [
+        //     item.descripcion, // Reemplazar con el nombre real del campo para la descripción
+        //     item.etiqueta, // Reemplazar con el nombre real del campo para la etiqueta
+        //     item.categoria_nombre, // Reemplazar con el nombre real del campo para el nombre de la categoría
+        //     item.ubicacion_nombre, // Reemplazar con el nombre real del campo para el nombre de la 
+        //     '<button class="btn btn-primary btn-sm btnAgregarEquipo recoverButton" idEquipoAgregar="' + item["equipo_id"] + '"><i class="fas fa-plus"></i> Agregar</button>' // Botón para agregar el activo
+        //   ];
+        // })).draw();
         // Mostrar los resultados en el formulario 
         $("#initialDate").val(fechaInicio);
         $("#finalDate").val(fechaFin);
