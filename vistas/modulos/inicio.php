@@ -353,7 +353,7 @@
     }
   });
 
-  Chart();
+  // Chart();
 </script>
 
 <!-- // TODO: Script de los estados de los equipos -->
@@ -427,7 +427,7 @@
 
 
 
-  document.querySelector('#leyenda-equipos').appendChild(
-    generateLegendEquipos(pieChartEquipos)
-  );
+  // document.querySelector('#leyenda-equipos').appendChild(
+  //   generateLegendEquipos(pieChartEquipos)
+  // );
 </script>

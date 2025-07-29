@@ -71,9 +71,9 @@ if ($respuesta["estado"] == "inactivo") {
                                                 <td>';
                                         if (ControladorValidacion::validarPermisoSesion([15])) {
                                             if ($value["estado"] == "activa") {
-                                                echo '<button class="btn btn-success btn-xs btnActivarSede" idSede="' . $value["id_sede"] . '" estadoSede="inactiva"">Activa</button>';
+                                                echo '<button class="btn btn-success btn-xs btnActivarSede" idSede="' . $value["id_sede"] . '" estadoSede="inactiva">Activa</button>';
                                             } else {
-                                                echo '<button class="btn btn-danger btn-xs" idSede="' . $value["id_sede"] . '" estadoSede="activa">Inactiva</button>';
+                                                echo '<button class="btn btn-danger btn-xs btnActivarSede" idSede="' . $value["id_sede"] . '" estadoSede="activa">Inactiva</button>';
                                             };
                                         } else {
                                             if ($value["estado"] == "activa") {
