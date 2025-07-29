@@ -23,8 +23,11 @@
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
+          <div class="col-sm-6 d-flex flex-direction-row">
             <h1>Usuarios</h1>
+              <button id="btnTourUsuario" title="Haz click aquí para un tour de inventario!" class="btn btn-default ml-2 mr-2 tourButton">
+                <i class="fas fa-map"></i>
+            </button>
           </div>
           <div class="col-sm-6">
 
@@ -32,12 +35,12 @@
             
             // Permiso para validar la agregación de un nuevo ususario
             if(ControladorValidacion::validarPermisoSesion([35])){
-              echo '<button class="btn btn-primary float-right" data-toggle="modal" data-target="#modalRegistrarUsuario" style="margin-left: 5px;">Agregar usuario</button>';
+              echo '<button class="btn btn-primary float-right tourAgregarUsuario" data-toggle="modal" data-target="#modalRegistrarUsuario" style="margin-left: 5px;">Agregar usuario</button>';
             }
 
             // Permiso para importación masiva de usuarios
             if(ControladorValidacion::validarPermisoSesion([36])){
-              echo '<button class="btn btn-success float-right" data-toggle="modal" data-target="#modalImportarUsuarios">
+              echo '<button class="btn btn-success float-right tourImportarUsuarios" data-toggle="modal" data-target="#modalImportarUsuarios">
                 <i class="fas fa-upload"></i> Importar Usuarios
               </button>';
             }
