@@ -12,8 +12,11 @@ if ($respuesta["estado"] == "inactivo") {
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
-        <div class="col-sm-6">
+        <div class="col-sm-6 d-flex flex-direction-row">
           <h1>Devoluciones</h1>
+            <button id="btnTourDevoluciones" title="Haz click aquí para un tour de devoluciones!" class="btn btn-default ml-2 mr-2 tourButton">
+                <i class="fas fa-map"></i>
+            </button>
         </div>
         <div class="col-sm-6">
         </div>
@@ -60,7 +63,7 @@ if ($respuesta["estado"] == "inactivo") {
                       <td>' . $value["tipo_prestamo"] . '</td>
                       <td class="text-center">
                         <div class="btn-group">
-                            <button title="Consultar detalles de préstamo" class="btn btn-default btn-sm btnVerUsuario" data-id="' . $value["id_prestamo"] . '" data-toggle="modal" data-target="#modalVerDetallesPrestamo">
+                            <button title="Consultar detalles de préstamo" class="btn btn-default btn-sm btnVerUsuario tourVerDevolucion" data-id="' . $value["id_prestamo"] . '" data-toggle="modal" data-target="#modalVerDetallesPrestamo">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
