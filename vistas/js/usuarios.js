@@ -33,7 +33,7 @@ $('#tblUsuarios').DataTable({
             "render": function(data, type, row) {
                 if(usuarioActual["permisos"].includes(40)){ // Validación #40:  Permite activar y desactivar al usuario
                     if (data === "activo") {
-                        return "<button title='Inactivar usuario' class='btn btn-success btnActivarUsuario' data-id='" + row[0] + "' data-estado='inactivo'>Activo</button>";
+                        return "<button title='Inactivar usuario' class='btn btn-success btnActivarUsuario tourActivarEstado' data-id='" + row[0] + "' data-estado='inactivo'>Activo</button>";
                     } else {
                         return "<button title='Activar usuario' class='btn btn-danger btnActivarUsuario' data-id='" + row[0] + "' data-estado='activo'>Inactivo</button>";                    
                     }
@@ -52,15 +52,15 @@ $('#tblUsuarios').DataTable({
                 let botones = "<div class='btn-group'>";
                 // Validación #37: Permite el acceso a los detalles del usuario
                 if(usuarioActual["permisos"].includes(37)){
-                    botones += "<button title='Consultar detalles de usuario' class='btn btn-default btnConsultarUsuario' idUsuario='" + row[0] + "' data-toggle='modal' data-target='#modalConsularUsuario'><i class='fas fa-eye'></i></button>";
+                    botones += "<button title='Consultar detalles de usuario' class='btn btn-default btnConsultarUsuario tourConsultarUsuario' idUsuario='" + row[0] + "' data-toggle='modal' data-target='#modalConsularUsuario'><i class='fas fa-eye'></i></button>";
                 }
                 // Validación #38: Permite editar los datos del usuario
                 if(usuarioActual["permisos"].includes(38)){
-                    botones += "<button title='Editar usuario' class='btn btn-default btnEditarUsuario' idUsuario='" + row[0] + "' data-toggle='modal' data-target='#modalEditarUsuario'><i class='fas fa-edit'></i></button>";
+                    botones += "<button title='Editar usuario' class='btn btn-default btnEditarUsuario tourEditarUsuario' idUsuario='" + row[0] + "' data-toggle='modal' data-target='#modalEditarUsuario'><i class='fas fa-edit'></i></button>";
                 }
                 // Validación #39: Permite ver las solicitudes del usuario
                 if(usuarioActual["permisos"].includes(39)){
-                    botones += "<button title='Solicitudes del usuario' class='btn btn-default btnSolicitudesUsuario' idUsuario='" + row[0] + "' data-numero-documento='"+ row[2] +"' data-toggle='modal' data-target='#modalSolicitudesUsuario'><i class='fas fa-laptop'></i></button>";
+                    botones += "<button title='Solicitudes del usuario' class='btn btn-default btnSolicitudesUsuario tourSolicitudesUsuario' idUsuario='" + row[0] + "' data-numero-documento='"+ row[2] +"' data-toggle='modal' data-target='#modalSolicitudesUsuario'><i class='fas fa-laptop'></i></button>";
                 }
                 botones += "</div>";
                 return botones;
