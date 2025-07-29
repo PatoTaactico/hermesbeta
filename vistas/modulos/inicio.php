@@ -12,25 +12,23 @@
         </div>
         <!-- Contenedor para los contenedores -->
         <div class="container-fluid d-flex flex-row flex-wrap justify-content-between estadisticasTour">
-            <div class="col-lg-3 col-12">
-              <!-- small box -->
-              <?php
+          <!-- small box -->
+            <?php
               $conteos = ControladorSolicitudes::ctrContarEquiposPorCategoria();
               $conteos2 = ControladorSolicitudes::ctrContarEquiposPorReserva();
-
-              ?>
+              
+            ?>
+            <div class="col-lg-3 col-12">
               <div class="small-box bg-info">
                 <div class="inner">
                   <h3>Portátiles</h3>
                   <p><strong>Disponibles:</strong> <?php echo isset($conteos[1]) ? $conteos[1] : 0; ?><br>
                     <strong>Reservados:</strong> <?php echo isset($conteos2[1]) ? $conteos2[1] : 0; ?>
                   </p>
-
                 </div>
                 <div class="icon">
                   <i class="fas fa-desktop"></i>
                 </div>
-
               </div>
             </div>
 
@@ -81,7 +79,7 @@
 
               </div>
             </div>
-
+          </div>
           <!-- Contenedor principal -->
 
           <!-- Tarjeta para Estados de Equipos -->
