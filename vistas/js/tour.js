@@ -378,7 +378,7 @@ $(document).on("click" , "#btnTourUsuario", () => {
         element: '.tourAgregarUsuario',
         popover: {
                 title: 'Agregar usuario',
-                description: 'Con este botón podrás importar equipos a la plataforma desde un archivo Excel',
+                description: 'Con este botón podrás agregar usuarios con su respectiva informacion ',
                 side: 'left',
                 align: 'center',
                 className: 'driverjs-custom-popover' 
