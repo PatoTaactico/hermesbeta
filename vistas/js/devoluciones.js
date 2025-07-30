@@ -1,6 +1,6 @@
 $(document).ready(function () {
     // Cuando se hace clic en el botón Ver
-    $(".btnVerUsuario").click(function () {
+    $(document).on("click", ".btnVerUsuario", function () {
         var idPrestamo = $(this).attr("data-id");
 
         // Realizar petición AJAX
@@ -48,7 +48,7 @@ $(document).ready(function () {
 
                     // Información de los equipos en una tabla
                     var equiposTableHtml = `
-                        <table class="table table-bordered table-striped dt-responsive tablaDevolucionesEquipos" width="100%">
+                        <table class="table table-bordered table-striped dt-responsive tablaDevolucionesEquipos">
                             <thead class="bg-dark">
                                 <tr>
                                     <th>Categoría</th>
