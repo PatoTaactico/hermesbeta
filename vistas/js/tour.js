@@ -351,3 +351,177 @@ $(document).on("click", "#btnTourInicio", () => {
     driverObj.drive();
 
 })
+
+
+//   <!-- ========== Start Section ==========
+//   TODO: Tour de usuario
+//   ========== End Section ========== -->
+
+$(document).on("click" , "#btnTourUsuario", () => {
+    let stepsUsuario = [];
+
+    if (usuarioActual["permisos"].includes(36)) {
+        stepsUsuario.push({
+        element: '.tourImportarUsuarios',
+            popover: {
+                title: 'Importar usuarios',
+                description: 'con este boton se podra importar usuarios por medio de tablas de Excel con cierta estructura',
+                side: 'left',
+                align: 'center',
+                className: 'driverjs-custom-popover' 
+            }
+        })
+    }
+
+    if (usuarioActual["permisos"].includes(35)) {
+        stepsUsuario.push({
+        element: '.tourAgregarUsuario',
+        popover: {
+                title: 'Agregar usuario',
+                description: 'Con este botón podrás importar equipos a la plataforma desde un archivo Excel',
+                side: 'left',
+                align: 'center',
+                className: 'driverjs-custom-popover' 
+            }
+        })
+        }
+
+        stepsUsuario.push({
+        element: '.dt-buttons',
+        popover: {
+            title: 'Botones de exportación',
+            description: 'Con estos botones podrás exportar los datos de la tabla a un archivo Excel, CSV (archivo de texto plano separado por comas), PDF (formato de archivo de portabilidad).',
+            side: 'top',
+            align: 'center',
+            className: 'driverjs-custom-popover' 
+        }
+    });
+
+
+    if (usuarioActual["permisos"].includes(40)) {
+        stepsUsuario.push({
+            element: '.tourActivarEstado',
+            popover: {
+                title: 'Activar o desactivar usuario',
+                description: 'Con este botón podrás activar o desactivar un usuario',
+                side: 'left',
+                align: 'center',
+                className: 'driverjs-custom-popover' 
+            }
+        })
+    }
+
+    if (usuarioActual["permisos"].includes(37)) {
+        stepsUsuario.push({
+            element: '.tourConsultarUsuario',
+            popover: {
+                title: 'Consultar usuario',
+                description: 'Con este botón podrás consultar toda la informacion de un usuario',
+                side: 'left',
+                align: 'center',
+                className: 'driverjs-custom-popover' 
+            }
+        })
+    }
+
+    if (usuarioActual["permisos"].includes(38)) {
+        stepsUsuario.push({
+            element: '.tourEditarUsuario',
+            popover: {
+                title: 'Editar usuario',
+                description: 'Con este botón podrás editar los datos de un usuario',
+                side: 'left',
+                align: 'center',
+                className: 'driverjs-custom-popover' 
+            }
+        })
+    }
+
+    if (usuarioActual["permisos"].includes(39)) {
+        stepsUsuario.push({
+            element: '.tourSolicitudesUsuario',
+            popover: {
+                title: 'Solicitudes de usuario',
+                description: 'con este boton podras ver todas las solicitudes que ha hecho el ususario',
+                side: 'left',
+                align: 'center',
+                className: 'driverjs-custom-popover' 
+            }
+        })
+    }
+
+    stepsUsuario.push({
+        popover: {
+            title: 'Ya sabes como manejar el modulo Usuarios<br>Felicidades!',
+            description: '<div class="text-center"><img src="vistas/img/Logo/android-chrome-192x192.png" alt="gif fin tour" class="img-fluid"></div>',
+            side: 'top',
+            align: 'center',
+            className: 'driverjs-custom-popover' 
+        }
+    });
+    
+        const driverObj = driver({
+        popoverClass: 'driverjs-theme',
+        showProgress: true,
+        nextBtnText: 'Siguiente -›',
+        prevBtnText: '‹- Anterior',
+        doneBtnText: 'Ok',
+        progressText: 'Paso {{current}} de {{total}}', 
+        steps: stepsUsuario
+    });
+
+    driverObj.drive();
+    
+});
+
+$(document).on("click" , "#btnTourDevoluciones" , () => {
+    let stepsDevoluciones = [];
+    
+    stepsDevoluciones.push({
+        element: '.dt-buttons',
+        popover: {
+            title: 'Botones de exportación',
+            description: 'Con estos botones podrás exportar los datos de la tabla a un archivo Excel, CSV (archivo de texto plano separado por comas), PDF (formato de archivo de portabilidad).',
+            side: 'top',
+            align: 'center',
+            className: 'driverjs-custom-popover' 
+        }
+    });
+
+    stepsDevoluciones.push({
+        element: '.tourVerDevolucion',
+        popover: {
+            title: 'Ver devolucion',
+            description: 'con este podras ver la devolucion del usuario para recibir los equipos prestados, aqui pondras si el equipo entregado en buen estado o no',
+            side: 'left',
+            align: 'center',
+            className: 'driverjs-custom-popover' 
+        }
+    })
+
+    stepsDevoluciones.push({
+        popover: {
+            title: 'Ya sabes como manejar el modulo Devoluciones<br>Felicidades!',
+            description: '<div class="text-center"><img src="vistas/img/Logo/android-chrome-192x192.png" alt="gif fin tour" class="img-fluid"></div>',
+            side: 'top',
+            align: 'center',
+            className: 'driverjs-custom-popover' 
+        }
+    });
+
+
+
+    const driverObj = driver({
+        popoverClass: 'driverjs-theme',
+        showProgress: true,
+        nextBtnText: 'Siguiente -›',
+        prevBtnText: '‹- Anterior',
+        doneBtnText: 'Ok',
+        progressText: 'Paso {{current}} de {{total}}', 
+
+        steps: stepsDevoluciones
+    });
+
+    driverObj.drive();
+
+})
