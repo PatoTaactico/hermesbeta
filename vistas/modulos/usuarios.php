@@ -25,7 +25,7 @@
         <div class="row mb-2">
           <div class="col-sm-6 d-flex flex-direction-row">
             <h1>Usuarios</h1>
-              <button id="btnTourUsuario" title="Haz click aquí para un tour de inventario!" class="btn btn-default ml-2 mr-2 tourButton">
+              <button id="btnTourUsuario" title="Haz click aquí para un tour de usuarios!" class="btn btn-default ml-2 mr-2 tourButton">
                 <i class="fas fa-map"></i>
             </button>
           </div>
