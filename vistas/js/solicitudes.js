@@ -252,11 +252,8 @@ $("#reservation").on("apply.daterangepicker", function (ev, picker) {
     });
     return;
   }
-  console.log("Fecha Inicio:", fechaInicio);
-  console.log("Fecha Fin:", fechaFin);
-  console.log("Fecha Actual:", fechaActual);
   if ((fechaInicio === fechaFin) && (fechaInicio === fechaActual)) {
-    $("#motivoSolicitud").val();
+    $("#motivoSolicitud").val("");
     $("#motivoSolicitud").val(
       "Solicitud de préstamo inmediato - " + fechaInicio
     );
@@ -270,7 +267,7 @@ $("#reservation").on("apply.daterangepicker", function (ev, picker) {
       return;
     }
   } else {
-    $("#motivoSolicitud").val();
+    $("#motivoSolicitud").val("");
     // si el usuario no tiene permiso para solicitar prestamos programados, mostrar alerta
     if (!usuarioActual.permisos.includes(8)) {
       Swal.fire({
