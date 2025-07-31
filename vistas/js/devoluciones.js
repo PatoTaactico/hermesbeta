@@ -48,15 +48,16 @@ $(document).ready(function () {
 
                     // Información de los equipos en una tabla
                     var equiposTableHtml = `
-                        <table class="table table-bordered table-striped dt-responsive tablaDevolucionesEquipos">
-                            <thead class="bg-dark">
-                                <tr>
-                                    <th>Categoría</th>
-                                    <th>Marca</th>
-                                    <th>Placa</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped tablaDevolucionesEquipos">
+                                <thead class="bg-dark">
+                                    <tr>
+                                        <th>Categoría</th>
+                                        <th>Marca</th>
+                                        <th>Placa</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
                             <tbody>
                     `;
 
@@ -96,7 +97,8 @@ $(document).ready(function () {
 
                     equiposTableHtml += `
                             </tbody>
-                        </table>
+                            </table>
+                        </div>
                     `;
 
                     $("#equiposListContainer").html(equiposTableHtml);
